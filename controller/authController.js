@@ -1,5 +1,6 @@
 const GoogleStrategy = require("passport-google-oauth20");
 const passport = require("passport");
+  const SendEmail = require("./../utils/sendEmail");
 
 const asyncHandler = require("express-async-handler");
 const User = require("./../models/userModel");
@@ -26,6 +27,25 @@ exports.SignUp = asyncHandler(async (req, res, next) => {
     phone: req.body.phone,
   });
   const token = createToken(newuser._id, newuser.role);
+  
+  const activationToken = crypto.randomBytes(32).toString("hex");
+  newuser.activationToken = crypto
+    .createHash("sha256")
+    .update(activationToken)
+    .digest("hex");
+  newuser.activationExpires = Date.now() + 24 * 60 * 60 * 1000; // 24 hours expiry
+
+  await newuser.save({ validateBeforeSave: false });
+
+  const activationURL = `http://localhost:4001/api/v1/auth/activate/${activationToken}`;
+
+  const message = `Hi ${newuser.userName},\nClick the link to activate your account:\n${activationURL}`;
+
+  await SendEmail({
+    email: newuser.email,
+    subject: "Activate your account",
+    message,
+  });
   console.log(token);
   res.status(200).json({
     Data: newuser,
@@ -53,6 +73,7 @@ exports.Login = asyncHandler(async (req, res, next) => {
   }
   const token = createToken(user._id, user.role);
 
+  
   res.status(200).json({
     message: "Login succssfuly",
     token,
@@ -122,6 +143,7 @@ passport.use(
         userName: profile.displayName,
         email: profile.emails[0].value,
         provider: "google",
+        active:true
       });
       await newUser.save();
       return done(null, newUser);
