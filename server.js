@@ -1,6 +1,6 @@
+require('dotenv').config(); 
 const express = require("express");
 const app = express();
-const dotenv = require("dotenv");
 const cors = require('cors');
 const morgan = require("morgan");
 const db = require("./config/db");
@@ -11,7 +11,6 @@ const { errorHandler, notfound } = require("./middleware/errorHundler");
 
 app.use(express.json());
 
-dotenv.config();
 
 if (process.env.NODE_MODE === "development") {
   app.use(morgan("dev"));
