@@ -130,7 +130,7 @@ passport.use(
     {
       clientID: process.env.YOUR_GOOGLE_CLIENT_ID,
       clientSecret: process.env.YOUR_GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.YOUR_GOOGLE_CLIENT_CALLBACK,
+      callbackURL:'https://real-estate-platform-production-6a5f.up.railway.app/api/v1/auth/google/callback',
     },
     async (accessToken, refreshToken, profile, done) => {
       const user = await User.findOne({ email: profile.emails[0].value });
