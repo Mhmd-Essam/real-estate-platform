@@ -31,14 +31,15 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: "image.jpg",
     },
-    active: {
-      type: Boolean,
-      default: function(){
-        if(this.provider==="google"){
-          return
-        }
-      },
-    },
+ active: {
+  type: Boolean,
+  default: function () {
+    if (this.provider === "google") {
+      return true;
+    }
+    return false;
+  },
+},
     provider: String,
     passwordChangedAt: Date,
     passwordResetCode: String,
