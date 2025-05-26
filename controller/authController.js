@@ -37,7 +37,7 @@ exports.SignUp = asyncHandler(async (req, res, next) => {
 
   await newuser.save({ validateBeforeSave: false });
 
-  const activationURL = `http://localhost:4001/api/v1/auth/activate/${activationToken}`;
+  const activationURL = `https://real-estate-platform-production-6a5f.up.railway.app/api/v1/auth/activate/${activationToken}`;
 
   const message = `Hi ${newuser.userName},\nClick the link to activate your account:\n${activationURL}`;
 
