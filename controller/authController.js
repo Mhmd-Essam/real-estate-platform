@@ -134,7 +134,6 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       const user = await User.findOne({ email: profile.emails[0].value });
-      console.log(callbackURL)
       if (user) {
         return done(null, user);
       }
