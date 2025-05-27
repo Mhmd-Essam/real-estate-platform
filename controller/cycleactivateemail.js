@@ -2,6 +2,7 @@ const User = require('./../models/userModel') ;
 const asyncHandler = require('express-async-handler') ; 
 
 const crypto = require('crypto'); 
+const JWT = require('jsonwebtoken');
 
 exports.activateUser = asyncHandler(async (req, res, next) => {
   const hashedToken = crypto
@@ -24,5 +25,13 @@ exports.activateUser = asyncHandler(async (req, res, next) => {
 
   await user.save({ validateBeforeSave: false });
 
-  res.status(200).json({ message: "Account activated successfully" });
+const token = JWT.sign(
+  { userID: user._id, role: user.role },
+  process.env.JWT_Secret_Key,
+  { expiresIn: process.env.JWT_EXPIRES_TIME }
+);
+
+  res.status(200).json({ message: "Account activated successfully"  , 
+    token
+  });
 });

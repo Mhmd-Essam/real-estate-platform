@@ -27,7 +27,7 @@ exports.SignUp = asyncHandler(async (req, res, next) => {
       message:"Email is already registred"
     })
    }
-   
+
   const newuser = await User.create({
     userName,
     email,
@@ -46,19 +46,17 @@ exports.SignUp = asyncHandler(async (req, res, next) => {
 
   await newuser.save({ validateBeforeSave: false });
 
-  const activationURL = `http://localhost:4001/api/v1/auth/activate/${activationToken}`;
+  const activationURL = `https://realstate-phi-seven.vercel.app/api/v1/auth/activate/${activationToken}`;
 
   const message = `Hi ${newuser.userName},\nClick the link to activate your account:\n${activationURL}`;
-
+  
   await SendEmail({
     email: newuser.email,
     subject: "Activate your account",
     message,
   });
-  console.log(token);
   res.status(200).json({
-    Data: newuser,
-    token,
+    Data:newuser,
   });
 });
 // login controller
