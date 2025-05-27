@@ -20,12 +20,21 @@ exports.SignUp = asyncHandler(async (req, res, next) => {
       message: "please enter username and email and password ",
     });
   }
+   const exitinguser = await User.findOne({email}) ; 
+   if(exitinguser){ 
+    return res.status(400).json({ 
+      status:"error", 
+      message:"Email is already registred"
+    })
+   }
+   
   const newuser = await User.create({
     userName,
     email,
     password,
     phone: req.body.phone,
   });
+
   const token = createToken(newuser._id, newuser.role);
   
   const activationToken = crypto.randomBytes(32).toString("hex");
@@ -37,7 +46,7 @@ exports.SignUp = asyncHandler(async (req, res, next) => {
 
   await newuser.save({ validateBeforeSave: false });
 
-  const activationURL = `https://real-estate-platform-production-6a5f.up.railway.app/api/v1/auth/activate/${activationToken}`;
+  const activationURL = `http://localhost:4001/api/v1/auth/activate/${activationToken}`;
 
   const message = `Hi ${newuser.userName},\nClick the link to activate your account:\n${activationURL}`;
 
@@ -60,6 +69,7 @@ exports.Login = asyncHandler(async (req, res, next) => {
     return next(new Error("Something went wrong", 404));
   }
   const user = await User.findOne({ email });
+  
 
   if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
     return res.status(401).json({
