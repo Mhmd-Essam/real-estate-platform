@@ -37,12 +37,8 @@ router.get(
       process.env.JWT_Secret_Key,
       { expiresIn: process.env.JWT_EXPIRES_TIME }
     );
+    res.redirect(`https://your-frontend.com/auth/callback?token=${token}`);
 
-    res.status(200).json({
-      message: "Google login successful",
-      token,
-      user: req.user,
-    });
   }
 );
 
