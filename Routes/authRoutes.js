@@ -37,7 +37,7 @@ router.get(
       process.env.JWT_Secret_Key,
       { expiresIn: process.env.JWT_EXPIRES_TIME }
     );
-    res.redirect(`https://your-frontend.com/auth/callback?token=${token}`);
+    res.redirect(`https://realstate-phi-seven.vercel.app/auth/callback?token=${token}`);
 
   }
 );
