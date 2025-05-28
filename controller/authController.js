@@ -46,7 +46,7 @@ exports.SignUp = asyncHandler(async (req, res, next) => {
 
   await newuser.save({ validateBeforeSave: false });
 
-  const activationURL = `https://realstate-phi-seven.vercel.app/activate/${activationToken}`;
+  const activationURL = `https://realstate-phi-seven.vercel.app/auth/emailverifing/${activationToken}`;
 
   const message = `Hi ${newuser.userName},\nClick the link to activate your account:\n${activationURL}`;
   
