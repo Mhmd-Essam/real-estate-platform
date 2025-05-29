@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
-const db = require("./config/db");
+const connectDB = require("./config/db");
 const session = require("express-session");
 const passport = require("passport");
 require("./controller/authController");
@@ -12,7 +12,7 @@ const authRoute = require("./Routes/authRoutes");
 const { errorHandler, notfound } = require("./middleware/errorHundler");
 
 // ✅ Connect to DB
-db.connection;
+connectDB(); 
 
 app.use(express.json());
 
@@ -36,7 +36,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/auth",authRoute);
+
+app.get('/',(req,res)=>{ 
+  console.log('welcom to my app')
+})
 
 app.use(notfound);
 app.use(errorHandler);
