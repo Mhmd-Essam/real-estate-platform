@@ -22,15 +22,8 @@ if (process.env.NODE_MODE === "development") {
 }
 
 // ✅ CORS setup for local and deployed frontend
-const corsOptions = {
-  origin: [
-    "http://localhost:5173",
-    "https://realstate-phi-seven.vercel.app"
 
-  ],
-  credentials: true,
-};
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(
   session({
