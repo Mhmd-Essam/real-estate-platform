@@ -52,3 +52,5 @@ app.use(errorHandler);
 app.listen(process.env.PORT || 4001, () => {
   console.log(`✅ App is running at: http://localhost:${process.env.PORT || 4001}`);
 });
+
+module.exports=app;
