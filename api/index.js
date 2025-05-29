@@ -6,7 +6,7 @@ const morgan = require("morgan");
 const db = require("./config/db");
 const session = require("express-session");
 const passport = require("passport");
-
+const serverless = require("serverless-http");
 require("./controller/authController");
 
 const authRoute = require("./Routes/authRoutes");
@@ -49,8 +49,5 @@ app.use("/api/v1/auth", authRoute);
 app.use(notfound);
 app.use(errorHandler);
 
-app.listen(process.env.PORT || 4001, () => {
-  console.log(`✅ App is running at: http://localhost:${process.env.PORT || 4001}`);
-});
 
-module.exports=app;
+module.exports.handler =serverless(app);
