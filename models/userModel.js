@@ -40,13 +40,15 @@ const UserSchema = new mongoose.Schema(
     return false;
   },
 },
-    provider: String,
-    passwordChangedAt: Date,
-    passwordResetCode: String,
-    passwordResetExpires: Date,
-    passwordResetVerified: Boolean,
-    activationToken: String,
-    activationExpires: Date,
+    provider: {type:String, 
+      default:'email'
+    },
+    passwordChangedAt:Date,
+    passwordResetCode:String,
+    passwordResetExpires:Date,
+    passwordResetVerified:Boolean,
+    activationToken:String,
+    activationExpires:Date,
   },
   { timestamps: true }
 );

@@ -45,8 +45,8 @@ exports.SignUp = asyncHandler(async (req, res, next) => {
   newuser.activationExpires = Date.now() + 24 * 60 * 60 * 1000; // 24 hours expiry
 
   await newuser.save({ validateBeforeSave: false });
-
-  const activationURL = `https://realstate-phi-seven.vercel.app/auth/emailverifing/${activationToken}`;
+//https://realstate-phi-seven.vercel.app/auth/emailverifing/
+const activationURL = `https://realstate-phi-seven.vercel.app/auth/emailverifing/${activationToken}`;
 
   const message = `Hi ${newuser.userName},\nClick the link to activate your account:\n${activationURL}`;
   
@@ -64,12 +64,11 @@ exports.SignUp = asyncHandler(async (req, res, next) => {
 exports.Login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return next(new Error("Something went wrong", 404));
+   return res.status(400).json({ message: "Email and password are required" });
   }
   const user = await User.findOne({ email });
   
-
-  if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
+    if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
     return res.status(401).json({
       message: "incorrect email or password",
     });

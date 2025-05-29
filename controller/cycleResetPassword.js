@@ -90,9 +90,7 @@
     user.passwordResetCode = undefined;
     user.passwordResetExpires = undefined;
     user.passwordResetVerified = undefined;
-
     await user.save();
-
     const token = createToken(user._id, user.role);
     res.status(200).json({
       message: "password changed successfuly",

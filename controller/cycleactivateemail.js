@@ -30,7 +30,6 @@ const token = JWT.sign(
   process.env.JWT_Secret_Key,
   { expiresIn: process.env.JWT_EXPIRES_TIME }
 );
-
   res.status(200).json({ message: "Account activated successfully"  , 
     token
   });

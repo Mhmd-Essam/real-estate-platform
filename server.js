@@ -19,7 +19,7 @@ app.use(express.json());
 
 if (process.env.NODE_MODE === "development") {
   app.use(morgan("dev"));
-  console.log(`mode: ${process.env.NODE_MODE}`);
+  console.log(`mode:${process.env.NODE_MODE}`);
 }
 
 // ✅ CORS setup for local and deployed frontend
